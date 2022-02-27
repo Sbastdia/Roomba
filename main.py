@@ -2,64 +2,30 @@ import tkinter
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
-import script
 
-class Pestana():
-    def __init__(self, nb):
-        self.pl = Frame(nb)
-        self.lblancho = Label(self.pl, text="Ancho")
-        self.spinancho = Spinbox(self.pl, from_=1, to=5)
-        self.lbllargo = Label(self.pl, text="Largo")
-        self.spinlargo = Spinbox(self.pl, from_=1, to=5)
-        self.lblancho.grid(column=0, row=0)
-        self.spinancho.grid(column=1, row=0)
-        self.lbllargo.grid(column=0, row=1)
-        self.spinlargo.grid(column=1, row=1)
-
-window = Tk()
-window.title("Hagamos una Roomba")
-window.geometry("400x255")
-
-pestadicionales = []
-
-nb = ttk.Notebook(window)
-nb.pack(fill="both", expand="yes")
-color="light steel blue"
-pl = Frame(nb, background=color)
-nb.add(pl, text="Zonas")
+from clases.dibujo import Dibujar
+from clases.Pestana import Pestana
+from clases.Robot import Robot
+from clases.Ventana import Ventana
+from clases.Forma2 import Principal
+from clases.Forma1 import Principal2
 
 
-window.configure(background=color)
 
-lbl = Label(pl, text="¿Cuantas zonas tiene el lugar?",bg=color,fg="black")
-lbl.grid(column=6, row=0)
-
-spin = Spinbox(pl, from_=1, to=20)
-spin.grid(column=6, row=1)
-
-
-def calcula():
-    superficie=0
-    for pest in pestadicionales:
-        ancho=int(pest.spinancho.get())
-        largo=int(pest.spinlargo.get())
-        superficie+=(ancho*largo)
-    messagebox.showinfo(message=str(superficie) + " metros cuadrados", title="Superficie total")
-
-btn2 = Button(window, text="Calcula", command=calcula)
-
-def creasalas():
-    numerosalas = int(spin.get())
-    for i in range(numerosalas):
-        pestaux = Pestana(nb)
-        nombre="Sala " + str(i+1)
-        nb.add(pestaux.pl, text=nombre)
-        pestadicionales.append(pestaux)
-    pl.destroy()
-    btn2.pack()
-
-btn = Button(pl, text="Pulsa", command=creasalas)
-btn.grid(column=6, row=3)
-
-
-window.mainloop()
+if __name__=="__main__":
+  
+  window=Ventana("Hagamos una Roomba")
+  def ejecuccion_Principal():
+    window.withdraw()
+    p=Principal(window)
+  def ejecuccion_Principal2():
+    window.withdraw()
+    p=Principal2(window)
+  color="light steel blue"
+  lbl = Label(window, text="Elige la forma en que debe limpiar Paqui",bg=color,fg="black")
+  lbl.pack()
+  btn = Button(window, text="Método con obstáculo", command=ejecuccion_Principal)
+  btn2 = Button(window, text="Método sin obstáculo", command=ejecuccion_Principal2)
+  btn.pack()
+  btn2.pack()
+  window.mainloop()
